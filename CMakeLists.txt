@@ -18,17 +18,18 @@ message(STATUS "    source path: ${CMAKE_CURRENT_SOURCE_DIR}")
 
 #For the shared library:
 set ( PROJECT_LINK_LIBS ${OpenCV_LIBS} )
-include_directories(/usr/local/include/opencv ${CMAKE_CURRENT_SOURCE_DIR}/src ${CMAKE_CURRENT_SOURCE_DIR}/src/json)
+include_directories(/usr/local/include/opencv ${CMAKE_CURRENT_SOURCE_DIR}/src ${CMAKE_CURRENT_SOURCE_DIR}/src/json
+                    /usr/local/lib/include/ /usr/local/opt/openssl/include)
 
 get_property(dirs DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY INCLUDE_DIRECTORIES)
 foreach(dir ${dirs})
   message(STATUS "dir='${dir}'")
 endforeach()
 
-link_directories( /usr/local/lib /usr/lib/x86_64-linux-gnu)
+link_directories( /usr/local/lib )
 
 set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} ${GCC_COVERAGE_COMPILE_FLAGS} -Wall -Wextra -pedantic -std=c++14 -g")
-set(CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} ${GCC_COVERAGE_LINK_FLAGS}")
+set(CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} ${GCC_COVERAGE_LINK_FLAGS} -L/usr/local/opt/openssl/lib")
 
 file(GLOB SOURCES "src/catdetector.cpp" "src/objectdetection.cpp" "src/md5_helper.cpp")
 
